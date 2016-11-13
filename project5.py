@@ -10,36 +10,51 @@ from Scientific.Visualization import VMD; module = VMD
 # Load the PDB file.
 #configuration = PDBConfiguration('1nxb.pdb')
 #configuration = PDBConfiguration('110d.pdb')
-configuration = PDBConfiguration('insulin.pdb')
+#configuration = PDBConfiguration('insulin.pdb')
+#configuration = PDBConfiguration('bALA1.pdb')
+configuration = PDBConfiguration('2YCC.pdb')
 
 # Construct the peptide chain objects.
 chains = configuration.createPeptideChains()
 
 # Make the protein object.
-protein = Protein(chains)
+#protein = Protein(chains)
 
 # The protein contains only one chain
 #chain = configuration.peptide_chains[0]
 chain = chains[0]
+sc = chain[11:27]
 
 # Number of residues in Protein
 numberOfResidues = len(chain)
 
 # Access all residues
-#for residue in chain: do sth
+goalAngles = []
+for i in range(0,len(sc)): 
+	print i,	
+	goalAngles.append(sc[i].chiAngle().getValue())
+	sc[i].phiAngle().setValue(.5)
+	sc[i].psiAngle().setValue(.5)
+
+
+print goalAngles
+
 
 # p[i:j] yields the subchain of chain p from residue number i up to but excluding residue number j
 #sc = chain[23:43]
 
 # access the i-th residue
-r1 = chain[1]
+#r1 = chain[1]
 
 # DihedralAngle 
-angle = r1.chiAngle()
+#angle = r1.chiAngle()
 
 # Create a universe and put the chain in it
 universe = InfiniteUniverse(Amber94ForceField())
-universe.addObject(chain)
+protein = Protein(chain)
+universe.addObject(protein)
+energy = universe.energy()
+print energy
 # Current configuration of universe
 universe.configuration()
 # List of atoms in universe
@@ -48,7 +63,7 @@ universe.atomList()
 #view(universe)
 
 # Visualization
-graphics = protein.graphicsObjects(graphics_module = module,
+graphics = sc.graphicsObjects(graphics_module = module,
                                    model = 'backbone', color = 'red')
 scene = VMD.Scene(graphics)
 scene.view()
