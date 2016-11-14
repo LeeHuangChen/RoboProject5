@@ -75,7 +75,7 @@ def isStateValid(state):
     j=0
     kb = 1.3806488e-23
     T=300
-    for i in range(0,len(sc)):
+    for i in range(0,numberOfResidues):
     	sc[i].phiAngle().setValue(state[j].value)
     	j=j+1
 
@@ -117,7 +117,7 @@ def planWithSimpleSetup():
     # Access all residues
     #goalAngles = []
     j=0
-    for i in range(0,len(sc)): 
+    for i in range(0,numberOfResidues): 
     	#print i,	
     	#goalAngles.append(sc[i].chiAngle().getValue())
 
@@ -171,9 +171,8 @@ def planWithSimpleSetup():
 
 
 if __name__ == "__main__":
-	configuration = PDBConfiguration('2YCC.pdb')
+	configuration = PDBConfiguration('2YCC_mod2.pdb')
 	chains = configuration.createPeptideChains()
 	chain = chains[0]
-	sc = chain[11:27]
-	numberOfResidues = len(sc)
+	numberOfResidues = len(chain)-2
 	planWithSimpleSetup()

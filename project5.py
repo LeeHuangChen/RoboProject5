@@ -12,7 +12,7 @@ from Scientific.Visualization import VMD; module = VMD
 #configuration = PDBConfiguration('110d.pdb')
 #configuration = PDBConfiguration('insulin.pdb')
 #configuration = PDBConfiguration('bALA1.pdb')
-configuration = PDBConfiguration('2YCC.pdb')
+configuration = PDBConfiguration('2YCC_mod2.pdb')
 
 # Construct the peptide chain objects.
 chains = configuration.createPeptideChains()
@@ -23,18 +23,18 @@ chains = configuration.createPeptideChains()
 # The protein contains only one chain
 #chain = configuration.peptide_chains[0]
 chain = chains[0]
-sc = chain[11:27]
+#sc = chain[11:27]
 
 # Number of residues in Protein
 numberOfResidues = len(chain)
 
 # Access all residues
 goalAngles = []
-for i in range(0,len(sc)): 
+for i in range(1,len(chain)-1): 
 	print i,	
-	goalAngles.append(sc[i].chiAngle().getValue())
-	sc[i].phiAngle().setValue(.5)
-	sc[i].psiAngle().setValue(.5)
+	goalAngles.append(chain[i].chiAngle().getValue())
+	chain[i].phiAngle().setValue(.5)
+	chain[i].psiAngle().setValue(.5)
 
 
 print goalAngles
@@ -61,7 +61,7 @@ universe.configuration()
 universe.atomList()
 
 #view(universe)
-
+sc = chain[1:3]
 # Visualization
 graphics = sc.graphicsObjects(graphics_module = module,
                                    model = 'backbone', color = 'red')
