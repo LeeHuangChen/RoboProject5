@@ -155,7 +155,7 @@ def planWithSimpleSetup():
 
     # this will automatically choose a default planner with
     # default parameters
-    solved = ss.solve(1000)
+    solved = ss.solve(10)
 
     if solved:
         # try to shorten the path
@@ -163,7 +163,11 @@ def planWithSimpleSetup():
         # print the simplified path
         print(ss.getSolutionPath())
         
-
+    pds=ob.PlannerDataStorage()
+    plannerdata=ob.PlannerData(ss.getSpaceInformation())
+    planner.getPlannerData(plannerdata)
+    pds.store(plannerdata,"PlannerData.txt")
+    
 
 
 if __name__ == "__main__":
